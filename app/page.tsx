@@ -55,30 +55,31 @@ export default function TabComponent() {
 
   return (
     <div className="min-h-screen bg-slate-900 text-slate-100 font-sans">
-      <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-slate-100 mb-2">Prompt Engineering Toolkit</h1>
-          <p className="text-slate-400">Enhance, transform, and optimize your AI prompts</p>
+      <div className="max-w-6xl mx-auto p-3 sm:p-4 lg:p-8">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-100 mb-2">Prompt Engineering Toolkit</h1>
+          <p className="text-sm sm:text-base text-slate-400">Enhance, transform, and optimize your AI prompts</p>
         </div>
 
         {/* Tab Navigation */}
-        <div className="mb-8">
+        <div className="mb-6 sm:mb-8">
           <div className="flex justify-center">
-            <div className="flex space-x-1 bg-slate-800 p-1 rounded-lg">
+            <div className="flex flex-col sm:flex-row space-y-1 sm:space-y-0 sm:space-x-1 bg-slate-800 p-1 rounded-lg w-full sm:w-auto">
               {tabs.map((tab) => {
                 const Icon = tab.icon
                 return (
                   <button
                     key={tab.id}
                     onClick={() => handleTabChange(tab.id)}
-                    className={`flex items-center gap-2 px-6 py-3 rounded-md transition-all whitespace-nowrap ${
+                    className={`flex items-center justify-center sm:justify-start gap-2 px-4 sm:px-6 py-3 rounded-md transition-all whitespace-nowrap text-sm sm:text-base ${
                       activeTab === tab.id
                         ? "bg-sky-500 text-white shadow-lg"
                         : "text-slate-300 hover:text-slate-100 hover:bg-slate-700"
                     }`}
                   >
                     <Icon className="w-4 h-4" />
-                    <span className="font-medium">{tab.label}</span>
+                    <span className="font-medium hidden sm:inline">{tab.label}</span>
+                    <span className="font-medium sm:hidden">{tab.label.split(' ')[0]}</span>
                   </button>
                 )
               })}
@@ -86,7 +87,7 @@ export default function TabComponent() {
           </div>
           {activeTab && (
             <div className="mt-4 flex justify-center">
-              <div className="w-96 h-1 bg-slate-800 rounded-full overflow-hidden">
+              <div className="w-full max-w-96 h-1 bg-slate-800 rounded-full overflow-hidden">
                 <motion.div
                   className="h-full bg-sky-400 rounded-full"
                   initial={{ width: 0 }}
@@ -112,7 +113,7 @@ export default function TabComponent() {
                 x: { type: "spring", stiffness: 300, damping: 30 },
                 opacity: { duration: 0.2 },
               }}
-              className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-700/50"
+              className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-4 sm:p-6 lg:p-8 border border-slate-700/50"
             >
               {renderTabContent()}
             </motion.div>

@@ -48,7 +48,7 @@ export const EnhancerTab = ({ copiedStates, copyToClipboard }: EnhancerTabProps)
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div className="flex justify-end">
         <CopyButton onCopy={() => copyToClipboard(enhancedText, "enhancer")} isCopied={copiedStates.enhancer} />
       </div>
@@ -58,19 +58,19 @@ export const EnhancerTab = ({ copiedStates, copyToClipboard }: EnhancerTabProps)
         <textarea
           value={rawText}
           onChange={(e) => setRawText(e.target.value)}
-          className="w-full h-32 px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent resize-none"
+          className="w-full h-24 sm:h-32 px-3 sm:px-4 py-2 sm:py-3 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent resize-none text-sm sm:text-base"
           placeholder="Enter your raw text to enhance into a solid prompt..."
         />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         <div>
           <label className="block text-sm font-medium text-slate-100 mb-2">Add Context</label>
           <input
             type="text"
             value={context}
             onChange={(e) => setContext(e.target.value)}
-            className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent"
+            className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent text-sm sm:text-base"
             placeholder="Additional context..."
           />
         </div>
@@ -80,7 +80,7 @@ export const EnhancerTab = ({ copiedStates, copyToClipboard }: EnhancerTabProps)
             type="number"
             value={tokenLimit}
             onChange={(e) => setTokenLimit(e.target.value)}
-            className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent"
+            className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent text-sm sm:text-base"
             placeholder="e.g., 1000"
           />
         </div>
@@ -88,12 +88,12 @@ export const EnhancerTab = ({ copiedStates, copyToClipboard }: EnhancerTabProps)
 
       <div>
         <label className="block text-sm font-medium text-slate-100 mb-3">Tone Selection</label>
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
           {tones.map((tone) => (
             <button
               key={tone}
               onClick={() => setSelectedTone(tone)}
-              className={`px-4 py-2 rounded-lg transition-colors ${
+              className={`px-3 sm:px-4 py-2 rounded-lg transition-colors text-sm sm:text-base ${
                 selectedTone === tone ? "bg-sky-500 text-white" : "bg-slate-700 text-slate-100 hover:bg-slate-600"
               }`}
             >
@@ -105,12 +105,12 @@ export const EnhancerTab = ({ copiedStates, copyToClipboard }: EnhancerTabProps)
 
       <div>
         <label className="block text-sm font-medium text-slate-100 mb-3">Language Selection</label>
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-3 sm:flex sm:flex-wrap gap-2">
           {languages.map((lang) => (
             <button
               key={lang}
               onClick={() => setSelectedLanguage(lang)}
-              className={`px-3 py-2 rounded-lg transition-colors ${
+              className={`px-2 sm:px-3 py-2 rounded-lg transition-colors text-sm sm:text-base ${
                 selectedLanguage === lang ? "bg-sky-500 text-white" : "bg-slate-700 text-slate-100 hover:bg-slate-600"
               }`}
             >
@@ -124,7 +124,7 @@ export const EnhancerTab = ({ copiedStates, copyToClipboard }: EnhancerTabProps)
         <button
           onClick={enhanceWithAI}
           disabled={isLoading}
-          className="px-8 py-3 bg-green-500 hover:bg-green-600 disabled:bg-green-400 text-white rounded-lg font-medium transition-colors"
+          className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-green-500 hover:bg-green-600 disabled:bg-green-400 text-white rounded-lg font-medium transition-colors text-sm sm:text-base"
         >
           {isLoading ? "Enhancing..." : "Enhance with AI"}
         </button>
@@ -133,9 +133,9 @@ export const EnhancerTab = ({ copiedStates, copyToClipboard }: EnhancerTabProps)
       {isLoading && <LoadingSpinner />}
 
       {isEnhanced && !isLoading && (
-        <div className="bg-slate-800 rounded-lg p-4">
+        <div className="bg-slate-800 rounded-lg p-3 sm:p-4">
           <h4 className="text-sm font-medium text-slate-100 mb-3">Enhanced Output</h4>
-          <pre className="text-sm text-slate-300 whitespace-pre-wrap font-mono bg-slate-900 p-4 rounded">
+          <pre className="text-xs sm:text-sm text-slate-300 whitespace-pre-wrap font-mono bg-slate-900 p-3 sm:p-4 rounded overflow-x-auto">
             {enhancedText}
           </pre>
         </div>

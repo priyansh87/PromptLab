@@ -56,7 +56,7 @@ export const TransformerTab = ({ copiedStates, copyToClipboard }: TransformerTab
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div className="flex justify-end">
         <CopyButton
           onCopy={() => copyToClipboard(transformedText, "transformer")}
@@ -65,8 +65,8 @@ export const TransformerTab = ({ copiedStates, copyToClipboard }: TransformerTab
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold text-slate-100 mb-4">Convert your prompt into various LLM techniques</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        <h3 className="text-base sm:text-lg font-semibold text-slate-100 mb-4">Convert your prompt into various LLM techniques</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
           {promptStyles.map((style) => {
             const Icon = style.icon
             const isActive = activeStyle === style.id
@@ -74,14 +74,14 @@ export const TransformerTab = ({ copiedStates, copyToClipboard }: TransformerTab
               <button
                 key={style.id}
                 onClick={() => handleStyleSelect(style.id)}
-                className={`flex items-center gap-3 p-4 rounded-lg transition-all ${
+                className={`flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-lg transition-all text-sm sm:text-base ${
                   isActive
                     ? "bg-sky-500 text-white shadow-lg shadow-sky-500/25"
                     : "bg-slate-700 text-slate-100 hover:bg-slate-600"
                 }`}
               >
-                <Icon className="w-5 h-5" />
-                <span className="font-medium">{style.label}</span>
+                <Icon className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                <span className="font-medium text-left">{style.label}</span>
               </button>
             )
           })}
@@ -89,9 +89,9 @@ export const TransformerTab = ({ copiedStates, copyToClipboard }: TransformerTab
       </div>
 
       {activeStyle && (
-        <div className="bg-slate-800 rounded-lg p-4">
+        <div className="bg-slate-800 rounded-lg p-3 sm:p-4">
           <h4 className="text-sm font-medium text-slate-100 mb-2">Selected Technique:</h4>
-          <span className="px-3 py-1 bg-green-500 text-white text-sm rounded-full">
+          <span className="px-2 sm:px-3 py-1 bg-green-500 text-white text-xs sm:text-sm rounded-full">
             {promptStyles.find((s) => s.id === activeStyle)?.label}
           </span>
         </div>
@@ -102,7 +102,7 @@ export const TransformerTab = ({ copiedStates, copyToClipboard }: TransformerTab
         <textarea
           value={inputPrompt}
           onChange={(e) => setInputPrompt(e.target.value)}
-          className="w-full h-24 px-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent resize-none"
+          className="w-full h-20 sm:h-24 px-3 sm:px-4 py-2 sm:py-3 bg-slate-800 border border-slate-700 rounded-lg text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-transparent resize-none text-sm sm:text-base"
           placeholder="Enter your prompt to transform..."
         />
       </div>
@@ -111,7 +111,7 @@ export const TransformerTab = ({ copiedStates, copyToClipboard }: TransformerTab
         <button
           onClick={enhanceWithAI}
           disabled={isLoading || !activeStyle || !inputPrompt.trim()}
-          className="px-8 py-3 bg-green-500 hover:bg-green-600 disabled:bg-green-400 text-white rounded-lg font-medium transition-colors"
+          className="w-full sm:w-auto px-6 sm:px-8 py-3 bg-green-500 hover:bg-green-600 disabled:bg-green-400 text-white rounded-lg font-medium transition-colors text-sm sm:text-base"
         >
           {isLoading ? "Transforming..." : "Enhance with AI"}
         </button>
@@ -122,8 +122,8 @@ export const TransformerTab = ({ copiedStates, copyToClipboard }: TransformerTab
       {isTransformed && !isLoading && (
         <div>
           <label className="block text-sm font-medium text-slate-100 mb-2">Transformed Output</label>
-          <div className="bg-slate-800 border border-slate-700 rounded-lg p-4 min-h-[100px]">
-            <pre className="text-slate-300 whitespace-pre-wrap text-sm">{transformedText}</pre>
+          <div className="bg-slate-800 border border-slate-700 rounded-lg p-3 sm:p-4 min-h-[100px]">
+            <pre className="text-slate-300 whitespace-pre-wrap text-xs sm:text-sm overflow-x-auto">{transformedText}</pre>
           </div>
         </div>
       )}
