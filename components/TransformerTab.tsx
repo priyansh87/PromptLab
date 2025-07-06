@@ -35,7 +35,6 @@ export const TransformerTab = ({ copiedStates, copyToClipboard }: TransformerTab
 
   const enhanceWithAI = async () => {
     if (!activeStyle || !inputPrompt.trim()) return
-    console.log("Enhancing with AI using style:", activeStyle)
     setIsLoading(true)
     try {
       const data: TransformerData = {
@@ -44,11 +43,15 @@ export const TransformerTab = ({ copiedStates, copyToClipboard }: TransformerTab
       }
 
       const response = await transformPromptAPI(data)
-      console.log("Transformer Response:", response)
-      if (response.success) {
-        setTransformedText(response.data)
-        setIsTransformed(true)
+      let output = response.data
+
+      // If output is object (like JSON), pretty-print it
+      if (typeof output === "object") {
+        output = JSON.stringify(output, null, 2)
       }
+
+      setTransformedText(output)
+      setIsTransformed(true)
     } catch (error) {
       console.error("Transformation failed:", error)
     } finally {
@@ -66,7 +69,9 @@ export const TransformerTab = ({ copiedStates, copyToClipboard }: TransformerTab
       </div>
 
       <div>
-        <h3 className="text-base sm:text-lg font-semibold text-slate-100 mb-4">Convert your prompt into various LLM techniques</h3>
+        <h3 className="text-base sm:text-lg font-semibold text-slate-100 mb-4">
+          Convert your prompt into various LLM techniques
+        </h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3">
           {promptStyles.map((style) => {
             const Icon = style.icon
@@ -124,7 +129,9 @@ export const TransformerTab = ({ copiedStates, copyToClipboard }: TransformerTab
         <div>
           <label className="block text-sm font-medium text-slate-100 mb-2">Transformed Output</label>
           <div className="bg-slate-800 border border-slate-700 rounded-lg p-3 sm:p-4 min-h-[100px]">
-            <pre className="text-slate-300 whitespace-pre-wrap text-xs sm:text-sm overflow-x-auto">{transformedText}</pre>
+            <pre className="text-slate-300 whitespace-pre-wrap text-xs sm:text-sm overflow-x-auto">
+              {transformedText}
+            </pre>
           </div>
         </div>
       )}

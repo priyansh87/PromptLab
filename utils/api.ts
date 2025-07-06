@@ -187,7 +187,8 @@ export const transformPromptAPI = async (
   data: TransformerData
 ): Promise<APIResponse> => {
   try {
-    const res = await fetch("/api/enhance", {
+    console.log("Transforming prompt with data: in api.ts", data);
+    const res = await fetch("/api/style-transformer", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

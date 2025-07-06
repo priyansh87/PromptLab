@@ -23,3 +23,6 @@ Selected Style: ${selectedStyle}
   
     return NextResponse.json({ data: enhanced[0]?.content });
 }
+
+export const dynamic = "force-dynamic"; // Ensure this route is always fresh
+export const revalidate = 0; // Disable caching for this route
