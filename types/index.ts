@@ -28,7 +28,7 @@ export interface WorkflowData {
 }
 
 export interface APIResponse {
-  success: boolean
-  data: string
-  error?: string
+  success: boolean;
+  data: string | null;
+  error?: string;
 }

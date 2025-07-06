@@ -2,6 +2,7 @@
   "name": "my-v0-project",
   "version": "0.1.0",
   "private": true,
+  "type":"module",
   "scripts": {
     "build": "next build",
     "dev": "next dev",
@@ -11,7 +12,7 @@
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
     "@hookform/resolvers": "^3.9.1",
-    "@inngest/agent-kit": "latest",
+    "@inngest/agent-kit": "^0.9.0",
     "@radix-ui/react-accordion": "1.2.2",
     "@radix-ui/react-alert-dialog": "1.1.4",
     "@radix-ui/react-aspect-ratio": "1.1.1",
@@ -46,7 +47,7 @@
     "date-fns": "^3.6.0",
     "embla-carousel-react": "8.5.1",
     "framer-motion": "latest",
-    "inngest": "latest",
+    "inngest": "^3.40.0",
     "input-otp": "1.4.1",
     "lucide-react": "^0.454.0",
     "next": "15.2.4",

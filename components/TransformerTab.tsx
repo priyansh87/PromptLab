@@ -35,7 +35,7 @@ export const TransformerTab = ({ copiedStates, copyToClipboard }: TransformerTab
 
   const enhanceWithAI = async () => {
     if (!activeStyle || !inputPrompt.trim()) return
-
+    console.log("Enhancing with AI using style:", activeStyle)
     setIsLoading(true)
     try {
       const data: TransformerData = {
@@ -44,6 +44,7 @@ export const TransformerTab = ({ copiedStates, copyToClipboard }: TransformerTab
       }
 
       const response = await transformPromptAPI(data)
+      console.log("Transformer Response:", response)
       if (response.success) {
         setTransformedText(response.data)
         setIsTransformed(true)

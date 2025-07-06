@@ -25,27 +25,39 @@ export const EnhancerTab = ({ copiedStates, copyToClipboard }: EnhancerTabProps)
   const [isEnhanced, setIsEnhanced] = useState(false)
 
   const enhanceWithAI = async () => {
-    setIsLoading(true)
-    try {
-      const data: EnhancerData = {
-        rawText,
-        context,
-        tokenLimit,
-        tone: selectedTone,
-        language: selectedLanguage,
-      }
+  setIsLoading(true);
+  try {
+    const data: EnhancerData = {
+      rawText,
+      context,
+      tokenLimit,
+      tone: selectedTone,
+      language: selectedLanguage,
+    };
 
-      const response = await enhancePromptAPI(data)
-      if (response.success) {
-        setEnhancedText(response.data)
-        setIsEnhanced(true)
-      }
-    } catch (error) {
-      console.error("Enhancement failed:", error)
-    } finally {
-      setIsLoading(false)
+    const response = await enhancePromptAPI(data);
+
+    if (response.success) {
+      const formattedText =
+        typeof response.data === "string"
+          ? response.data
+          : JSON.stringify(response.data, null, 2); // <- ✅ this fixes it
+
+      setEnhancedText(formattedText);
+      setIsEnhanced(true);
+    } else {
+      setEnhancedText("❌ Error: " + (response.error || "Unknown error"));
+      setIsEnhanced(true);
     }
+  } catch (error) {
+    console.error("Enhancement failed:", error);
+    setEnhancedText("❌ Internal Error: " + String(error));
+    setIsEnhanced(true);
+  } finally {
+    setIsLoading(false);
   }
+};
+
 
   return (
     <div className="space-y-4 sm:space-y-6">
