@@ -15,7 +15,7 @@ const tabs: Tab[] = [
   { id: "workflow", label: "Workflow Recommender", icon: Brain },
 ]
 
-export default function TabComponent() {
+export default function HomePage() {
   const [activeTab, setActiveTab] = useState("enhancer")
   const { copiedStates, copyToClipboard } = useClipboard()
 
