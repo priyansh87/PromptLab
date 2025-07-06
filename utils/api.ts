@@ -150,7 +150,7 @@ export const enhancePromptAPI = async (
   data: EnhancerData
 ): Promise<APIResponse> => {
   try {
-    const res = await fetch("/api/style-transformer", {
+    const res = await fetch("/api/enhance", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -214,28 +214,28 @@ export const transformPromptAPI = async (
 export const generateWorkflowAPI = async (
   data: WorkflowData
 ): Promise<APIResponse> => {
-  // TODO: Replace with actual API call
-  await mockDelay(2000);
+  try {
+    const res = await fetch("/api/workflow-generator", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
 
-  const workflowText = `Recommended LLM Pipeline Architecture:
+    const json = await res.json();
 
-Task: ${data.taskDescription || "No task description provided"}
-
-Suggested Flow:
-1. Input Processing & Validation
-2. Chunking Strategy (if needed)
-3. Parallel Processing with Map-Reduce
-4. Retry Logic & Error Handling
-5. Output Aggregation & Formatting
-
-Implementation Notes:
-- Use async processing for better performance
-- Implement exponential backoff for retries
-- Consider rate limiting for API calls
-- Add comprehensive logging and monitoring`;
-
-  return {
-    success: true,
-    data: workflowText,
-  };
+    return {
+      success: true,
+      data: json.data,
+    };
+  } catch (err: any) {
+    return {
+      success: false,
+      data: null,
+      error: err.message || "API call failed",
+    };
+  }
 };
+
+
