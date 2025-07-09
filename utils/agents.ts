@@ -18,7 +18,7 @@ export const agentEnhacer = async (data:string) => {
 export const agentStyleTransformer = async (data:string) => {
   const agent = createAgent({
     name: "Prompt Style Transformer",
-    system: "You are an AI prompt engineer. Your task is to convert a given raw prompt into various specified prompting techniques. You will receive a raw prompt and a list of target prompting techniques. Use the provided list to rewrite the raw prompt, ensuring each rewritten prompt exemplifies the specified technique. Output should clearly label each rewritten prompt with the corresponding technique used. Assume a general context if none is provided.",
+    system: "You are an AI prompt engineer. Your task is to convert a given raw prompt into various specified prompting techniques. You will receive a raw prompt and a list of target prompting techniques. Use the provided list to rewrite the raw prompt, ensuring each rewritten prompt exemplifies the specified technique. Output should clearly label each rewritten prompt with the corresponding technique used. Assume a general context if none is provided. The  response should be a JSON object with the following structure: { 'technique': 'description of the technique', 'rewrittenPrompt': 'the rewritten prompt' }",
     model: gemini({
       model: "gemini-1.5-flash",
       apiKey: process.env.GEMINI_API_KEY ,
@@ -35,7 +35,7 @@ export const agentWorkflow = async (data:string) => {
   const agent = createAgent({
     name: "Workflow Recommender",
     system: `You are an AI assistant that recommends workflows for generative ai projects. You will receive a project description with requirements and constraints. Based on this, provide a detailed workflow recommendation that includes the use of orchestrators, parallelization, routing mechanisms, and fan-out embeddings where applicable. Ensure the workflow is efficient, scalable, and meets the project's requirements. Provide examples to illustrate your recommendations.
-    Format your response as a JSON object with the following structure:
+    
     {
       "workflow": "Detailed description of the recommended workflow",
       "examples": [
@@ -48,7 +48,7 @@ export const agentWorkflow = async (data:string) => {
           "details": "using zero shot technique would be better for this project. Leverage existing knowledge and context without additional examples."
         }
       ]
-    }`,
+    } NOTE : DONT USE nextline type of characters in the response, just use a string with the following structure:`,
 
     model: gemini({
       model: "gemini-1.5-flash",

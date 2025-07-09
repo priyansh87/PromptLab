@@ -6,6 +6,7 @@ import { CopyButton } from "./CopyButton"
 import { LoadingSpinner } from "./LoadingSpinner"
 import { transformPromptAPI } from "../utils/api"
 import type { TransformerData, PromptStyle } from "../types"
+import ReactMarkdown from 'react-markdown';
 
 const promptStyles: PromptStyle[] = [
   { id: "cot", label: "Chain of Thought", icon: Brain },
@@ -49,8 +50,20 @@ export const TransformerTab = ({ copiedStates, copyToClipboard }: TransformerTab
       if (typeof output === "object") {
         output = JSON.stringify(output, null, 2)
       }
-
-      setTransformedText(output)
+      // Remove ```json or ``` from start and end
+      output = output.trim();
+      if (output.startsWith("```json")) {
+        output = output.slice(7); // remove ```json\n
+      }
+      if (output.endsWith("```")) {
+        output = output.slice(0, -3); // remove ending ```
+      }
+      // Remove any leading/trailing whitespace
+      output = output.trim();
+      // convert to json object and extract content if needed
+      const parsed = JSON.parse(output);
+      const prompt = parsed?.[0]?.rewrittenPrompt;
+      setTransformedText(prompt)
       setIsTransformed(true)
     } catch (error) {
       console.error("Transformation failed:", error)
@@ -130,7 +143,8 @@ export const TransformerTab = ({ copiedStates, copyToClipboard }: TransformerTab
           <label className="block text-sm font-medium text-slate-100 mb-2">Transformed Output</label>
           <div className="bg-slate-800 border border-slate-700 rounded-lg p-3 sm:p-4 min-h-[100px]">
             <pre className="text-slate-300 whitespace-pre-wrap text-xs sm:text-sm overflow-x-auto">
-              {transformedText}
+              
+              <ReactMarkdown>{transformedText}</ReactMarkdown>
             </pre>
           </div>
         </div>

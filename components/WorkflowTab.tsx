@@ -27,12 +27,40 @@ export const WorkflowTab = ({ copiedStates, copyToClipboard }: WorkflowTabProps)
       }
 
       const response = await generateWorkflowAPI(data)
-      if (response.success) {
-        setWorkflowText(response.data)
-        setIsGenerated(true)
+      let output = response.data
+      
+      
+        // If output is object (like JSON), pretty-print it
+      if (typeof output === "object") {
+        output = JSON.stringify(output, null, 2)
       }
-    } catch (error) {
-      console.error("Workflow generation failed:", error)
+      // Remove ```json or ``` from start and end
+      output = output.trim();
+      if (output.startsWith("```json")) {
+        console.log
+        output = output.slice(7); // remove ```json\n
+      }
+      if (output.endsWith("```")) {
+        output = output.slice(0, -3); // remove ending ```
+      }
+      // Remove any leading/trailing whitespace
+      output = output.trim();
+      // convert to json object and extract content if needed
+      const parsed = JSON.parse(output);
+      const examplesFormatted = parsed?.examples
+  ?.map(
+    (ex: any, i: number) =>
+      `\n\nExample ${i + 1}:\n🔹 ${ex.example}\n📝 ${ex.details}`
+  )
+  .join("") ?? "";
+
+const prompt = parsed?.workflow + examplesFormatted;
+
+      setWorkflowText(prompt)
+      setIsGenerated(true)
+    
+  } catch (error) {
+    console.error("Workflow generation failed:", error)
     } finally {
       setIsLoading(false)
     }
